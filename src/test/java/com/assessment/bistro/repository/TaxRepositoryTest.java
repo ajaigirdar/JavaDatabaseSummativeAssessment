@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaxRepositoryTest {
     Tax expectedRecord1;
     Tax expectedRecord2;
-
     @Autowired
     TaxRepository repo;
 
@@ -37,11 +37,24 @@ class TaxRepositoryTest {
 
     @Test
     public void testRecordOneFound() {
+        //act
+        Optional<Tax> foundRecord = repo.findById(1);
 
+        //assert
+        assertTrue(foundRecord.isPresent());
+        assertEquals(expectedRecord1.getTaxPercentage(),foundRecord.get().getTaxPercentage());
+        assertEquals(expectedRecord1.getStartDate(),foundRecord.get().getStartDate());
+        assertEquals(expectedRecord1.getEndDate(),foundRecord.get().getEndDate());
     }
 
     @Test
     public void testRecordTwoFound() {
+        //act
+        Optional<Tax> foundRecord = repo.findById(2);
 
+        //assert
+        assertTrue(foundRecord.isPresent());
+        assertEquals(expectedRecord2.getTaxPercentage(),foundRecord.get().getTaxPercentage());
+        assertEquals(expectedRecord2.getStartDate(),foundRecord.get().getStartDate());
     }
 }
