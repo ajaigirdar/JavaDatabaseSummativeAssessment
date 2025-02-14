@@ -1,11 +1,10 @@
 package com.assessment.bistro.model;
 
 import jakarta.persistence.*;
-import org.aspectj.weaver.ast.Or;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "`Order`")
@@ -13,8 +12,8 @@ public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int OrderID;
-    private int ServerID;
+    private int OrderId;
+    private int ServerId;
     @Temporal(TemporalType.DATE)
     private LocalDate OrderDate;
     private BigDecimal SubTotal;
@@ -27,7 +26,7 @@ public class Order implements Serializable {
     }
 
     public Order(int serverID, LocalDate orderDate, BigDecimal subTotal, BigDecimal tax, BigDecimal tip, BigDecimal total) {
-        ServerID = serverID;
+        ServerId = serverID;
         OrderDate = orderDate;
         SubTotal = subTotal;
         Tax = tax;
@@ -35,20 +34,20 @@ public class Order implements Serializable {
         Total = total;
     }
 
-    public int getOrderID() {
-        return OrderID;
+    public int getOrderId() {
+        return OrderId;
     }
 
-    public void setOrderID(int orderID) {
-        OrderID = orderID;
+    public void setOrderId(int orderId) {
+        OrderId = orderId;
     }
 
-    public int getServerID() {
-        return ServerID;
+    public int getServerId() {
+        return ServerId;
     }
 
-    public void setServerID(int serverID) {
-        ServerID = serverID;
+    public void setServerId(int serverId) {
+        ServerId = serverId;
     }
 
     public LocalDate getOrderDate() {
@@ -94,13 +93,32 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return "Order{" +
-                "OrderID=" + OrderID +
-                ", ServerID=" + ServerID +
+                "OrderID=" + OrderId +
+                ", ServerID=" + ServerId +
                 ", OrderDate=" + OrderDate +
                 ", SubTotal=" + SubTotal +
                 ", Tax=" + Tax +
                 ", Tip=" + Tip +
                 ", Total=" + Total +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+        Order order = (Order) o;
+        return Objects.equals(getOrderId(), order.getOrderId()) &&
+                Objects.equals(getServerId(), order.getServerId()) &&
+                Objects.equals(getOrderDate(), order.getOrderDate()) &&
+                Objects.equals(getSubTotal(), order.getSubTotal()) &&
+                Objects.equals(getTax(), order.getTax()) &&
+                Objects.equals(getTip(), order.getTip()) &&
+                Objects.equals(getTotal(), order.getTotal());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOrderId(), getServerId(), getOrderDate(), getSubTotal(), getTax(), getTip(), getTotal());
     }
 }
