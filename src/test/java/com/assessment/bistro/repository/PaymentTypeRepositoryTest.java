@@ -17,15 +17,13 @@ class PaymentTypeRepositoryTest {
     @Autowired
     private PaymentTypeRepository repo;
 
-    @BeforeEach
-    void setUp(){
+    @Test
+    void testGetAllPaymentTypes() {
+        //arrange
         expectedPaymentType = new PaymentType();
         expectedPaymentType.setPaymentTypeName("Ethereum");
         repo.save(expectedPaymentType);
-    }
 
-    @Test
-    void testGetAllPaymentTypes() {
         //act
         List<PaymentType> paymentTypes = repo.findAll();
 
