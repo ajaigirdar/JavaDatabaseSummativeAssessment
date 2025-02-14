@@ -3,13 +3,15 @@ package com.assessment.bistro.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 @Entity
 @Table(name = "Payment_Type")
 public class PaymentType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int PaymentTypeID;
+    private int PaymentTypeId;
     private String PaymentTypeName;
 
     public PaymentType() {
@@ -20,12 +22,12 @@ public class PaymentType implements Serializable {
         PaymentTypeName = paymentTypeName;
     }
 
-    public int getPaymentTypeID() {
-        return PaymentTypeID;
+    public int getPaymentTypeId() {
+        return PaymentTypeId;
     }
 
-    public void setPaymentTypeID(int paymentTypeID) {
-        PaymentTypeID = paymentTypeID;
+    public void setPaymentTypeId(int paymentTypeId) {
+        PaymentTypeId = paymentTypeId;
     }
 
     public String getPaymentTypeName() {
@@ -39,8 +41,20 @@ public class PaymentType implements Serializable {
     @Override
     public String toString() {
         return "PaymentType{" +
-                "PaymentTypeID=" + PaymentTypeID +
+                "PaymentTypeID=" + PaymentTypeId +
                 ", PaymentTypeName='" + PaymentTypeName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PaymentType that)) return false;
+        return getPaymentTypeId() == that.getPaymentTypeId() && Objects.equals(getPaymentTypeName(), that.getPaymentTypeName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPaymentTypeId(), getPaymentTypeName());
     }
 }
