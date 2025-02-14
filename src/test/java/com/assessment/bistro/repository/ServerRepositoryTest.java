@@ -25,11 +25,10 @@ class ServerRepositoryTest {
     @BeforeEach
     void setUp() {
         expectedServer = new Server();
-        expectedServer.setServerId(19);
-        expectedServer.setFirstName("Julina");
-        expectedServer.setLastName("O'Luby");
-        expectedServer.setHireDate(LocalDate.of(2020,1,1));
-        expectedServer.setTermDate(LocalDate.of(2020,7,29));
+        expectedServer.setServerId(6);
+        expectedServer.setFirstName("Fulton");
+        expectedServer.setLastName("Mallen");
+        expectedServer.setHireDate(LocalDate.of(2021,5,25));
     }
 
     @Test
@@ -42,7 +41,8 @@ class ServerRepositoryTest {
     @Test
     void testGetAllAvailableServers() {
         //act
-        List<Server> servers = repo.findAll();
+        List<Server> servers = repo.findByTermDateIsNull();
+
         //assert
         assertFalse(servers.isEmpty());
         assertTrue(servers.contains(expectedServer));
@@ -51,7 +51,7 @@ class ServerRepositoryTest {
     @Test
     void testUpdateServer() {
         // arrange
-        expectedServer.setFirstName("Alice");
+        expectedServer.setFirstName("Fulton");
         repo.save(expectedServer);
 
         //act
@@ -59,7 +59,7 @@ class ServerRepositoryTest {
 
         //assert
         assertTrue(updatedServer.isPresent());
-        assertEquals("Alice",updatedServer.get().getFirstName());
+        assertEquals("Fulton",updatedServer.get().getFirstName());
     }
 
     @Test
