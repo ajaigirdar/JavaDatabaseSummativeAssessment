@@ -1,11 +1,10 @@
 package com.assessment.bistro.model;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Item")
@@ -13,8 +12,9 @@ public class Item implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ItemID;
-    private int ItemCategoryID;
+    private int ItemId;
+    @Column(name = "Item_Category_ID")
+    private int ItemCategoryId;
     private String ItemName;
     private String ItemDescription;
     @Temporal(TemporalType.DATE)
@@ -27,8 +27,8 @@ public class Item implements Serializable {
 
     }
 
-    public Item(int itemCategoryID, String itemName, String itemDescription, LocalDate startDate, LocalDate endDate, BigDecimal unitPrice) {
-        ItemCategoryID = itemCategoryID;
+    public Item(int itemCategoryId, String itemName, String itemDescription, LocalDate startDate, LocalDate endDate, BigDecimal unitPrice) {
+        ItemCategoryId = itemCategoryId;
         ItemName = itemName;
         ItemDescription = itemDescription;
         StartDate = startDate;
@@ -36,20 +36,20 @@ public class Item implements Serializable {
         UnitPrice = unitPrice;
     }
 
-    public int getItemID() {
-        return ItemID;
+    public int getItemId() {
+        return ItemId;
     }
 
-    public void setItemID(int itemID) {
-        ItemID = itemID;
+    public void setItemId(int itemId) {
+        ItemId = itemId;
     }
 
-    public int getItemCategoryID() {
-        return ItemCategoryID;
+    public int getItemCategoryId() {
+        return ItemCategoryId;
     }
 
-    public void setItemCategoryID(int itemCategoryID) {
-        ItemCategoryID = itemCategoryID;
+    public void setItemCategoryId(int itemCategoryId) {
+        ItemCategoryId = itemCategoryId;
     }
 
     public String getItemName() {
@@ -95,13 +95,31 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         return "Item{" +
-                "ItemID=" + ItemID +
-                ", ItemCategoryID=" + ItemCategoryID +
+                "ItemID=" + ItemId +
+                ", ItemCategoryID=" + ItemCategoryId +
                 ", ItemName='" + ItemName + '\'' +
                 ", ItemDescription='" + ItemDescription + '\'' +
                 ", StartDate=" + StartDate +
                 ", EndDate=" + EndDate +
                 ", UnitPrice=" + UnitPrice +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+        Item item = (Item) o;
+        return Objects.equals(getItemId(), item.getItemId()) &&
+                Objects.equals(getItemCategoryId(), item.getItemCategoryId()) &&
+                Objects.equals(getItemName(), item.getItemName()) &&
+                Objects.equals(getStartDate(), item.getStartDate()) &&
+                Objects.equals(getEndDate(), item.getEndDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getItemId(), getItemCategoryId(), getItemName(), getStartDate(), getEndDate());
+
     }
 }
